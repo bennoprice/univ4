@@ -8,13 +8,13 @@ import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.s
 import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
-import {Counter} from "../src/Counter.sol";
-import {CounterImplementation} from "../test/implementation/CounterImplementation.sol";
+import {TradingHours} from "../src/TradingHours.sol";
+import {TradingHoursImplementation} from "../test/implementation/TradingHoursImplementation.sol";
 
 /// @notice Forge script for deploying v4 & hooks to **anvil**
 /// @dev This script only works on an anvil RPC because v4 exceeds bytecode limits
 /// @dev and we also need vm.etch() to deploy the hook to the proper address
-contract CounterScript is Script {
+contract TradingHoursScript is Script {
     function setUp() public {}
 
     function run() public {
@@ -34,7 +34,7 @@ contract CounterScript is Script {
 
         vm.broadcast();
         // until i figure out create2 deploys on an anvil RPC, we'll use the etch cheatcode
-        CounterImplementation impl = new CounterImplementation(manager, Counter(address(targetFlags)));
+        TradingHoursImplementation impl = new TradingHoursImplementation(manager, TradingHours(address(targetFlags)));
         etchHook(address(impl), address(targetFlags));
 
         vm.startBroadcast();
